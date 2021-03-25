@@ -44,6 +44,11 @@ const sys_config = require("./sys_config");
         util_tool.wait(WAITTIME);
         console.log("Success: Get the search result");
 
+        // 获取到搜索结果页面中的next button元素
+        await page.waitForSelector('a.lnkNextResultsPage');
+        let nextButtons = await page.$$('a.lnkNextResultsPage');
+        const nextButton = nextButtons[0];
+        
         // 执行结束后 关闭浏览器
         await browser.close();
     })();
