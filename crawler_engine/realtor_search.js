@@ -15,7 +15,8 @@ const sys_config = require("./sys_config");
         const page = await browser.newPage();
 
         // 设置全局页面跳转等待时间
-        const waitTime = sys_config.jumpWaitTime;
+        const WAITTIME = sys_config.jumpWaitTime;
+        const CITY = user_config.city;
 
         // 适配浏览器窗口大小
         await page.setViewport({
@@ -26,7 +27,23 @@ const sys_config = require("./sys_config");
         // 跳转到Realtor首页
         await page.goto(sys_config.realtor);
         console.log("Success: redirect to Realtor");
-          
+
+        // 等待页面加载
+        util_tool.wait(WAITTIME);
+        
+        // 获取首页输入框focus 并且输入搜索信息
+        // Use waitForSelector to make sure the element is loaded before we use it
+        await page.waitForSelector('#homeSearchTxt');
+        await page.focus("#homeSearchTxt");
+        await page.keyboard.sendCharacter(CITY);
+
+        // 发送搜索请求
+        await page.keyboard.press('Enter');
+
+        // 等待页面加载
+        util_tool.wait(WAITTIME);
+        console.log("Success: Get the search result");
+
         // 执行结束后 关闭浏览器
         await browser.close();
     })();
