@@ -48,7 +48,15 @@ const sys_config = require("./sys_config");
         await page.waitForSelector('a.lnkNextResultsPage');
         let nextButtons = await page.$$('a.lnkNextResultsPage');
         const nextButton = nextButtons[0];
-        
+
+        // 获取到当前搜索结果页数 -> paginationTotalPagesNum
+        await page.waitForSelector('span.paginationTotalPagesNum');
+        let paginationTotalPagesElements = await page.$$("span.paginationTotalPagesNum");
+        let paginationTotalPagesElement = paginationTotalPagesElements[0];
+        let totalPageNumStr = await page.evaluate(paginationTotalPagesElement => paginationTotalPagesElement.textContent, paginationTotalPagesElement);
+        let totalPageNum = util_tool.str_to_num(totalPageNumStr);
+        console.log("Success: Get the total result page: " + totalPageNum);
+
         // 执行结束后 关闭浏览器
         await browser.close();
     })();
