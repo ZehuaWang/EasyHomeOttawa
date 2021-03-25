@@ -3,6 +3,7 @@ const puppeteerExtra = require('puppeteer-extra');
 const pluginStealth = require('puppeteer-extra-plugin-stealth');
 const util_tool = require("./util");
 const user_config = require("./user_config");
+const sys_config = require("./sys_config");
 
 (async () => 
     {
@@ -13,6 +14,19 @@ const user_config = require("./user_config");
         const browser = await puppeteerExtra.launch({ headless: false });
         const page = await browser.newPage();
 
+        // 设置全局页面跳转等待时间
+        const waitTime = sys_config.jumpWaitTime;
+
+        // 适配浏览器窗口大小
+        await page.setViewport({
+            width: 1920,
+            height: 1080
+          });
+        
+        // 跳转到Realtor首页
+        await page.goto(sys_config.realtor);
+        console.log("Success: redirect to Realtor");
+          
         // 执行结束后 关闭浏览器
         await browser.close();
     })();
