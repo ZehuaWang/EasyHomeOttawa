@@ -44,11 +44,6 @@ const sys_config = require("./sys_config");
         util_tool.wait(WAITTIME);
         console.log("Success: Get the search result");
 
-        // 获取到搜索结果页面中的next button元素
-        await page.waitForSelector('a.lnkNextResultsPage');
-        let nextButtons = await page.$$('a.lnkNextResultsPage');
-        const nextButton = nextButtons[0];
-
         // 获取到当前搜索结果页数 -> paginationTotalPagesNum
         await page.waitForSelector('span.paginationTotalPagesNum');
         let paginationTotalPagesElements = await page.$$("span.paginationTotalPagesNum");
@@ -56,6 +51,18 @@ const sys_config = require("./sys_config");
         let totalPageNumStr = await page.evaluate(paginationTotalPagesElement => paginationTotalPagesElement.textContent, paginationTotalPagesElement);
         let totalPageNum = util_tool.str_to_num(totalPageNumStr);
         console.log("Success: Get the total result page: " + totalPageNum);
+
+        // 循环点击下一页按钮
+        for (let i = 1; i < totalPageNum - 1; i++)
+        {
+          util_tool.wait(WAITTIME);
+          console.log("Success: Now on result page: " + i);
+          // 获取到搜索结果页面中的next button元素
+          await page.waitForSelector('a.lnkNextResultsPage');
+          let nextButtons = await page.$$('a.lnkNextResultsPage');
+          const nextButton = nextButtons[0];
+          await nextButton.click();
+        }
 
         // 执行结束后 关闭浏览器
         await browser.close();
