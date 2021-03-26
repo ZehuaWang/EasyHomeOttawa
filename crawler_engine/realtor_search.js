@@ -29,9 +29,11 @@ const logger_factory = require("../log_engine/globalLogger");
             height: 1080
           });
         
+        logger.debug("reset the chrome viewport size");
+        
         // 跳转到Realtor首页
         await page.goto(sys_config.realtor);
-        console.log("Success: redirect to Realtor");
+        logger.debug("redirect to Realtor");
 
         // 等待页面加载
         util_tool.wait(WAITTIME);
@@ -47,7 +49,7 @@ const logger_factory = require("../log_engine/globalLogger");
 
         // 等待页面加载
         util_tool.wait(WAITTIME);
-        console.log("Success: Get the search result");
+        logger.debug("Get the search result");
 
         // 获取到当前搜索结果页数 -> paginationTotalPagesNum
         await page.waitForSelector('span.paginationTotalPagesNum');
@@ -55,13 +57,14 @@ const logger_factory = require("../log_engine/globalLogger");
         let paginationTotalPagesElement = paginationTotalPagesElements[0];
         let totalPageNumStr = await page.evaluate(paginationTotalPagesElement => paginationTotalPagesElement.textContent, paginationTotalPagesElement);
         let totalPageNum = util_tool.str_to_num(totalPageNumStr);
-        console.log("Success: Get the total result page: " + totalPageNum);
+      
+        logger.debug("Get the total result page: " + totalPageNum);
 
         // 循环点击下一页按钮
         for (let i = 1; i <= totalPageNum; i++)
         {
           util_tool.wait(WAITTIME);
-          console.log("Success: Now on result page: " + i);
+          logger.debug("Now on result page: " + i);
           // 获取到搜索结果页面中的next button元素
           await page.waitForSelector('a.lnkNextResultsPage');
           let nextButtons = await page.$$('a.lnkNextResultsPage');
