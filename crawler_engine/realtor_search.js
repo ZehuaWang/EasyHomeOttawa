@@ -53,7 +53,7 @@ const sys_config = require("./sys_config");
         console.log("Success: Get the total result page: " + totalPageNum);
 
         // 循环点击下一页按钮
-        for (let i = 1; i < totalPageNum - 1; i++)
+        for (let i = 1; i <= totalPageNum; i++)
         {
           util_tool.wait(WAITTIME);
           console.log("Success: Now on result page: " + i);
