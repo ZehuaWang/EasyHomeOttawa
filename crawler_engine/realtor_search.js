@@ -4,15 +4,20 @@ const pluginStealth = require('puppeteer-extra-plugin-stealth');
 const util_tool = require("./util");
 const user_config = require("./user_config");
 const sys_config = require("./sys_config");
+const logger_factory = require("../log_engine/globalLogger");
 
 (async () => 
     {
+        const logger = logger_factory.logger;
+
         // 设置Stealth插件
         puppeteerExtra.use(pluginStealth());
 
         // 获取浏览器实例 并打开新的Tab
         const browser = await puppeteerExtra.launch({ headless: false });
         const page = await browser.newPage();
+
+        logger.debug("Create a chrome instance and open a new tab");
 
         // 设置全局页面跳转等待时间
         const WAITTIME = sys_config.jumpWaitTime;
