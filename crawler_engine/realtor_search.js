@@ -65,6 +65,11 @@ const logger_factory = require("../log_engine/globalLogger");
         {
           util_tool.wait(WAITTIME);
           logger.debug("Now on result page: " + i);
+
+          // 选择当前页面所有的 house card
+          let housecards = await page.$$("div.cardCon");
+          logger.debug("Current page has " + housecards.length + " houses");
+
           // 获取到搜索结果页面中的next button元素
           await page.waitForSelector('a.lnkNextResultsPage');
           let nextButtons = await page.$$('a.lnkNextResultsPage');
