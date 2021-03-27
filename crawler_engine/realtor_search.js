@@ -74,6 +74,10 @@ const logger_factory = require("../log_engine/globalLogger");
           let housecards_address = await page.$$("div.smallListingCardAddress");
           let housecards_price   = await page.$$("div.smallListingCardPrice");
           let housecards_image   = await page.$$("img.smallListingCardImage");
+          let housecards_detail  = await page.$$("a.blockLink");
+
+          // 从 housecards 元素列表中提取信息 并声称json 文件
+
 
           // 获取到搜索结果页面中的next button元素
           await page.waitForSelector('a.lnkNextResultsPage');

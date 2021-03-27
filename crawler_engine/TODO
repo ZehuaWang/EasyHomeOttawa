@@ -1,2 +1,3 @@
 1. Add log module to generate a formatted log. -> https://github.com/log4js-node/log4js-node [Done]
-2. Collect the house information from every result page.
+2. Collect the house information from every result page. [Done]
+3. Write the house address, house price and house image and house url to a formatted json file. 
