@@ -73,6 +73,7 @@ const logger_factory = require("../log_engine/globalLogger");
           // 获取每一个 house card 的  地址 房价 图片URL
           let housecards_address = await page.$$("div.smallListingCardAddress");
           let housecards_price   = await page.$$("div.smallListingCardPrice");
+          let housecards_image   = await page.$$("img.smallListingCardImage");
 
           // 获取到搜索结果页面中的next button元素
           await page.waitForSelector('a.lnkNextResultsPage');
