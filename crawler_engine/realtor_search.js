@@ -70,6 +70,10 @@ const logger_factory = require("../log_engine/globalLogger");
           let housecards = await page.$$("div.cardCon");
           logger.debug("Current page has " + housecards.length + " houses");
 
+          // 获取每一个 house card 的  地址 房价 图片URL
+          let housecards_address = await page.$$("div.smallListingCardAddress");
+          let housecards_price   = await page.$$("div.smallListingCardPrice");
+
           // 获取到搜索结果页面中的next button元素
           await page.waitForSelector('a.lnkNextResultsPage');
           let nextButtons = await page.$$('a.lnkNextResultsPage');
