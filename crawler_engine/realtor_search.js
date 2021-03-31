@@ -77,6 +77,11 @@ const logger_factory = require("../log_engine/globalLogger");
           let housecards_detail  = await page.$$("a.blockLink");
 
           // 从 housecards 元素列表中提取信息 并生成json 文件
+          for (let i = 0; i < housecards_address.length; i++)
+          {
+            let address_ele = housecards_address[i];
+            let address_str = await page.evaluate(address_ele => address_ele.textContent, address_ele);
+          }
 
 
           // 获取到搜索结果页面中的next button元素
