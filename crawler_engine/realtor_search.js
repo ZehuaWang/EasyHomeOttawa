@@ -91,13 +91,16 @@ const logger_factory = require("../log_engine/globalLogger");
             let detail_ele = housecards_detail[i];
             let detail_str = await page.evaluate(detail_ele => detail_ele.getAttribute("href"), detail_ele);
 
-            let house_obj = [];
+            let house_obj = {};
 
             house_obj["address"] = address_str.trim();
             house_obj["price"] = price_str.trim();
             house_obj["image"] = image_str.trim();
             house_obj["detail"] = detail_str.trim();
             
+            let house_json = JSON.stringify(house_obj);
+            
+            // TODO collect all the house_json and write to a file
           }
 
 
