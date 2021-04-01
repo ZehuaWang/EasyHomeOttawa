@@ -81,6 +81,23 @@ const logger_factory = require("../log_engine/globalLogger");
           {
             let address_ele = housecards_address[i];
             let address_str = await page.evaluate(address_ele => address_ele.textContent, address_ele);
+
+            let price_ele = housecards_price[i];
+            let price_str = await page.evaluate(price_ele => price_ele.textContent, price_ele);
+
+            let image_ele = housecards_image[i];
+            let image_str = await page.evaluate(image_ele => image_ele.getAttribute("src"), image_ele);
+
+            let detail_ele = housecards_detail[i];
+            let detail_str = await page.evaluate(detail_ele => detail_ele.getAttribute("href"), detail_ele);
+
+            let house_obj = [];
+
+            house_obj["address"] = address_str.trim();
+            house_obj["price"] = price_str.trim();
+            house_obj["image"] = image_str.trim();
+            house_obj["detail"] = detail_str.trim();
+            
           }
 
 
