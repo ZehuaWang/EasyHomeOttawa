@@ -5,9 +5,24 @@ const util_tool = require("./util");
 const user_config = require("./user_config");
 const sys_config = require("./sys_config");
 const logger_factory = require("../log_engine/globalLogger");
+const fs = require('fs');
 
 (async () => 
     {
+        // 开始抓取数据之前 创建result文件夹和result.json文件
+        var res_dir = './result'
+        var res_json = './result/result.json';
+        if (!fs.existsSync(res_dir)) {
+          fs.mkdirSync(res_dir);
+        }
+
+        // 创建 result.json 文件
+        fs.writeFile(res_json, '', function (err) {
+          if (err) throw err;               
+          logger.debug(res_json+' created');
+        }); 
+
+        // 引入日志
         const logger = logger_factory.logger;
 
         // 设置Stealth插件
@@ -112,6 +127,10 @@ const logger_factory = require("../log_engine/globalLogger");
           const nextButton = nextButtons[0];
           await nextButton.click();
         }
+
+        fs.writeFile(res_json, search_result_json_arr, 'utf8', (err, data) => {});
+
+        logger.debug("Load " + search_result_json_arr.length + " records into result.json file");
 
         // 执行结束后 关闭浏览器
         await browser.close();
