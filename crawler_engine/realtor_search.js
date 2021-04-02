@@ -59,6 +59,8 @@ const logger_factory = require("../log_engine/globalLogger");
         let totalPageNum = util_tool.str_to_num(totalPageNumStr);
       
         logger.debug("Get the total result page: " + totalPageNum);
+        
+        let search_result_json_arr = [];
 
         // 循环点击下一页按钮
         for (let i = 1; i <= totalPageNum; i++)
@@ -90,6 +92,7 @@ const logger_factory = require("../log_engine/globalLogger");
 
             let detail_ele = housecards_detail[i];
             let detail_str = await page.evaluate(detail_ele => detail_ele.getAttribute("href"), detail_ele);
+            detail_str = "https://www.realtor.ca" + detail_str;
 
             let house_obj = {};
 
@@ -100,9 +103,8 @@ const logger_factory = require("../log_engine/globalLogger");
             
             let house_json = JSON.stringify(house_obj);
             
-            // TODO collect all the house_json and write to a file
+            search_result_json_arr.push(house_json);
           }
-
 
           // 获取到搜索结果页面中的next button元素
           await page.waitForSelector('a.lnkNextResultsPage');
