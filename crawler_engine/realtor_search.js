@@ -128,7 +128,7 @@ const fs = require('fs');
           await nextButton.click();
         }
 
-        fs.writeFile(res_json, search_result_json_arr, 'utf8', (err, data) => {});
+        fs.writeFile(res_json, '['+search_result_json_arr+']', 'utf8', (err, data) => {});
 
         logger.debug("Load " + search_result_json_arr.length + " records into result.json file");
 
