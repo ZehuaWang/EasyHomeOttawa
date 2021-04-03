@@ -6,6 +6,13 @@ const user_config = require("./user_config");
 const sys_config = require("./sys_config");
 const logger_factory = require("../log_engine/globalLogger");
 const fs = require('fs');
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '123456',
+  database : 'test'
+});
 
 (async () => 
     {
@@ -21,6 +28,9 @@ const fs = require('fs');
           if (err) throw err;               
           logger.debug(res_json+' created');
         }); 
+
+        // 连接数据库
+        connection.connect();
 
         // 引入日志
         const logger = logger_factory.logger;
