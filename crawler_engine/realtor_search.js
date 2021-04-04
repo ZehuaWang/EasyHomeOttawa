@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '123456',
-  database : 'test'
+  database : 'realtor'
 });
 
 (async () => 
@@ -125,6 +125,20 @@ const connection = mysql.createConnection({
             house_obj["price"] = price_str.trim();
             house_obj["image"] = image_str.trim();
             house_obj["detail"] = detail_str.trim();
+
+            var  addSql = 'INSERT INTO propertyinfo(address,price,image,detail) VALUES(?,?,?,?)';
+            var  addSqlParams = [house_obj["address"], house_obj["price"],house_obj["image"], house_obj["detail"]];
+            connection.query(addSql,addSqlParams,function (err, result) {
+              if(err){
+               console.log('[INSERT ERROR] - ',err.message);
+               return;
+              }        
+       
+             console.log('--------------------------INSERT----------------------------');
+             //console.log('INSERT ID:',result.insertId);        
+             console.log('INSERT ID:',result);        
+             console.log('-----------------------------------------------------------------\n\n');  
+            });
             
             let house_json = JSON.stringify(house_obj);
             
@@ -144,4 +158,5 @@ const connection = mysql.createConnection({
 
         // 执行结束后 关闭浏览器
         await browser.close();
+        connection.end();
     })();
