@@ -3,4 +3,4 @@
 3. Write the house address, house price and house image and house url to a formatted json file -> Json Array. [Done]
 4. Add database support and create a propertyinfo table to store the data. [Done]
 5. Add the logic to void the repeat data being insert into the table. -> Set the address field in mysql as index and uniqe[DONE]
-6. Prevent the primary key auto increment when insert error happened [TODO].
+6. Re-desgin the table to use UUID as the key and introduce UUID function to generate it in nodejs. [todo].
