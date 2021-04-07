@@ -7,6 +7,7 @@ const sys_config = require("./sys_config");
 const logger_factory = require("../log_engine/globalLogger");
 const fs = require('fs');
 const mysql = require('mysql');
+const uuid = require('node-uuid');
 const connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
@@ -126,8 +127,8 @@ const connection = mysql.createConnection({
             house_obj["image"] = image_str.trim();
             house_obj["detail"] = detail_str.trim();
 
-            var  addSql = 'INSERT INTO propertyinfo(address,price,image,detail) VALUES(?,?,?,?)';
-            var  addSqlParams = [house_obj["address"], house_obj["price"],house_obj["image"], house_obj["detail"]];
+            var  addSql = 'INSERT INTO propertyinfo(id,address,price,image,detail) VALUES(?,?,?,?,?)';
+            var  addSqlParams = [uuid.v1(),house_obj["address"], house_obj["price"],house_obj["image"], house_obj["detail"]];
             connection.query(addSql,addSqlParams,function (err, result) {
               if(err){
                console.log('[INSERT ERROR] - ',err.message);
